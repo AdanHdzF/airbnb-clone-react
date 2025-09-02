@@ -1,4 +1,9 @@
-docker build -t airbnb-clone-react .
+docker build -t airbnb-clone-dev -f Dockerfile.dev .
 
-docker run -it -p 5173:5173 airbnb-clone-react -f Dockerfile.dev .
+docker run -it -p 5173:5173 airbnb-clone-dev
 
+
+
+docker build -t airbnb-clone-prod -f Dockerfile.prod .
+
+docker run -it -p 8083:80 airbnb-clone-prod
