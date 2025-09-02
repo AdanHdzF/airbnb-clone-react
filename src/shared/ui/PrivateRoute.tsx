@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import { Navigate } from 'react-router-dom';
 import { useAuthContext } from '../hooks/AuthContext';
 // import { useAuth } from '../../features/properties/hooks/useAuth';
 
@@ -9,8 +8,8 @@ interface PrivateRouteProps {
 	fallback?: ReactNode;
 }
 
-function PrivateRoute({ children, roles, fallback }: PrivateRouteProps) {
-	const { isAuthenticated, user, isLoading, error, login } = useAuthContext();
+function PrivateRoute({ children /*, roles, fallback*/ }: PrivateRouteProps) {
+	const { isAuthenticated, isLoading, error, login } = useAuthContext();
 
 	// console.log('user', user);
 

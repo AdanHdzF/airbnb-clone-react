@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useAuthContext } from '../shared/hooks/AuthContext';
 
 function ProfilePage() {
@@ -34,6 +34,8 @@ function ProfilePage() {
 		}
 		return 'user';
 	};
+
+	void checkUsername();
 
 	return (
 		<>

@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { PropertyGrid, SearchBar } from '../features/properties';
 // import { useAuth } from '../features/properties/hooks/useAuth';
 
 import RemotePropertyApp from '../shared/ui/RemotePropertyApp';
-import RemoteSearchApp from '../shared/ui/RemoteSearchApp';
+// import RemoteSearchApp from '../shared/ui/RemoteSearchApp';
 
 import OneSignal from 'react-onesignal';
 
