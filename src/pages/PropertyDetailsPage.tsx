@@ -1,52 +1,74 @@
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import './PropertyDetailsPage.css';
-import { useParams, useNavigate, Link } from 'react-router-dom';
 // import { usePropertiesStore, type Property } from '../features/properties';
 
-import { PropertiesApi } from '../features/properties/api/propertiesApi';
 import type { Property } from '../features/properties';
+// import { PropertiesApi } from '../features/properties/api/propertiesApi';
 import LoadingSpinner from '../shared/ui/LoadingSpinner';
 
+import { useQuery } from '@apollo/client/react';
+import { GET_PROPERTY } from '../shared/graphql/queries';
+import { type GetPropertyVariables } from '../shared/graphql/types';
+
 function PropertyDetailsPage() {
+	///////////////////
+
+	const { id } = useParams<{ id: string }>();
+	const navigate = useNavigate();
+	const { data, loading, error } = useQuery<
+		{ property: Property },
+		GetPropertyVariables
+	>(GET_PROPERTY, {
+		variables: { id: Number(id) },
+		skip: !id,
+	});
+
+	console.log(data);
+
+	const property = data?.property;
+
+	///////////////////
+
 	// const { id } = useParams<{ id: string }>();
 	// const navigate = useNavigate();
 	// const properties = usePropertiesStore((state) => state.properties);
 
 	// const propertyId = parseInt(id || '0', 10);
 	// const property = properties.find((p) => p.id === propertyId);
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 	const handleBackClick = () => {
 		navigate(-1);
 	};
 
-	const { id } = useParams<{ id: string }>();
+	// const { id } = useParams<{ id: string }>();
 
 	// const property = usePropertiesStore((state) =>
 	// 	state.properties.find((p) => p.id === Number(id))
 	// );
 
-	const [property, setProperty] = useState<Property | null>(null);
-	const [loading, setLoading] = useState(true);
+	// const [property, setProperty] = useState<Property | null>(null);
+	// const [loading, setLoading] = useState(true);
 
-	useEffect(() => {
-		setLoading(true);
-		const abortController = new AbortController();
+	// useEffect(() => {
+	// 	setLoading(true);
+	// 	const abortController = new AbortController();
 
-		const fetchPropertyDetails = async () => {
-			const propertyDetails = await PropertiesApi.getPropertyDetails(
-				Number(id),
-				abortController.signal
-			);
-			setProperty(propertyDetails);
-		};
-		fetchPropertyDetails();
-		setLoading(false);
+	// 	const fetchPropertyDetails = async () => {
+	// 		const propertyDetails = await PropertiesApi.getPropertyDetails(
+	// 			Number(id),
+	// 			abortController.signal
+	// 		);
+	// 		setProperty(propertyDetails);
+	// 	};
+	// 	fetchPropertyDetails();
+	// 	setLoading(false);
 
-		return () => {
-			abortController.abort();
-		};
-	}, [id]);
+	// 	return () => {
+	// 		abortController.abort();
+	// 	};
+	// }, [id]);
 
 	console.log(property);
 
@@ -94,7 +116,7 @@ function PropertyDetailsPage() {
 		);
 	}
 
-	if (!property) {
+	if (!property || error) {
 		return (
 			<div className="property-details-container">
 				<div className="property-not-found">
